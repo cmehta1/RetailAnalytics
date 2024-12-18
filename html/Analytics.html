@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Data Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        canvas {
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+<h1>Product Data Visualization</h1>
+
+<canvas id="categoryDistribution" width="400" height="400"></canvas>
+<canvas id="stockByCategory" width="600" height="400"></canvas>
+
+<script>
+        // Fetch data from data.json
+        fetch('https://dummyjson.com/products')
+            .then(response => response.json())
+            .then(data => {
+                // Prepare data for charts
+                const categoryCounts = {};
+                const categoryStocks = {};
+
+                data.products.forEach(product => {
+                    if (!categoryCounts[product.category]) {
+                        categoryCounts[product.category] = 0;
+                        categoryStocks[product.category] = 0;
+                    }
+                    categoryCounts[product.category] += 1;
+                    categoryStocks[product.category] += product.stock;
+                });
+
+                const categories = Object.keys(categoryCounts);
+                const counts = Object.values(categoryCounts);
+                const stocks = Object.values(categoryStocks);
+
+                // Pie Chart: Category Distribution
+                const ctx1 = document.getElementById('categoryDistribution').getContext('2d');
+                new Chart(ctx1, {
+                    type: 'pie',
+                    data: {
+                        labels: categories,
+                        datasets: [{
+                            label: 'Category Distribution',
+                            data: counts,
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                        }]
+                    }
+                });
+
+                // Bar Chart: Stock Levels by Category
+                const ctx2 = document.getElementById('stockByCategory').getContext('2d');
+                new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: categories,
+                        datasets: [{
+                            label: 'Stock Levels',
+                            data: stocks,
+                            backgroundColor: '#36A2EB'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading data:', error));
+    </script>
+</body>
+</html>
