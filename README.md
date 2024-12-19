@@ -1,6 +1,4 @@
-# Retail Analytics
-
-It is clone of Astore Ecommerce website with all basic functionalities of Ecommerce website.
+# Retail Analytics:
 
 ## Technologies Used
 
