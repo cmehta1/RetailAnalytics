@@ -19,14 +19,10 @@ It is clone of Astore Ecommerce website with all basic functionalities of Ecomme
 - Cart: The cart displays the items, their individual prices, and the total price of all products in the cart.
 - Search: A search bar allows users to search for specific products.
 
-## Demo
-https://cmehta1.github.io/RetailAnalytics/
-
-
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/cmehta1/RetailAnalytics.git`
+1. Clone the repository.
 2. Open the project directory: `cd RetailAnalytics`
 3. Open the `index.html` file in your preferred web browser.
 
