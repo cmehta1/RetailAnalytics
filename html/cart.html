@@ -83,7 +83,7 @@
           <a href="#abc">Clearance Sale</a>
           <a href="#abc">About Us</a>
         </div>
-        <li><a href="">Customer Reviews</a></li>
+        <li><a href="Analytics.html">Data Analytics</a></li>
         <li><a href="">About</a></li>
       </ul>
 
@@ -191,8 +191,8 @@
 
 </div>  -->
     <h3 class="header">Full Product Description</h3>
-
     <section id="prodetails" class="section-p1">
+
       <!-- <div class="img-section">
     <img src="../images/products/f1.jpg" alt="">
     <div class="small-images">
@@ -225,6 +225,11 @@
     <span>%des%</span>
   </div> -->
     </section>
+    <h1>Customer Reviews</h1>
+
+    <div id="product-reviews">
+      <ul id="review-list"></ul>
+    </div>
 
     <!-- Featured Products -->
     /*I will add Featured products later on*/
@@ -282,5 +287,38 @@
     </footer>
     <script src="../js/cart.js"></script>
     <!-- <script src="script.js"></script> -->
+
+
+    <script>
+        // Fetch and display reviews for a specific product by default
+        const defaultProductId = 1; // Replace with the desired default product ID
+
+        function showProductReviews(productId) {
+            // Fetch product reviews
+            fetch(`https://dummyjson.com/products/${productId}`)
+                .then(response => response.json())
+                .then(product => {
+                    const reviewList = document.getElementById('review-list');
+                    reviewList.innerHTML = ""; // Clear previous reviews
+                    if (product.reviews && product.reviews.length > 0) {
+                        product.reviews.forEach(review => {
+                            const reviewItem = document.createElement('li');
+                            reviewItem.innerHTML = `
+                                <strong>${review.reviewerName}</strong> (${new Date(review.date).toLocaleDateString()}):
+                                <em>${review.comment}</em>
+                                <span>Rating: ${review.rating}/5</span>
+                            `;
+                            reviewList.appendChild(reviewItem);
+                        });
+                    } else {
+                        reviewList.innerHTML = "<li>No reviews available for this product.</li>";
+                    }
+                })
+                .catch(error => console.error('Error fetching product reviews:', error));
+        }
+
+        // Automatically display the reviews for the default product
+        showProductReviews(defaultProductId);
+    </script>
   </body>
 </html>
