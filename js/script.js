@@ -10,7 +10,6 @@ let products1 = [];
     function showLoading() {
       document.getElementById('loading').style.display = 'block';
     }
-
     // Function to hide the loading message
     function hideLoading() {
       document.getElementById('loading').style.display = 'none';
@@ -27,7 +26,7 @@ function showProductData() {
    
     products1.forEach(function (product) {
       console.log("product" + product.title)
-      if (1  )
+      if (1 )
           {
               var html = `<div class="product" data-aos="zoom-out" data-aos-duration="2000">
       <img src="%src%" alt="Product 1" onclick="redirectToProductDetails(%productId%)">
@@ -58,10 +57,10 @@ function showProductData() {
         newHtml = newHtml.replace('%product%', product.id);
         newHtml = newHtml.replace('%newPrice%', product.price - (product.price * product.discount / 100));
           newHtml = newHtml.replace('%description%', product.description);
+          newHtml = newHtml.replace('%review%', product.reviews);
             contentElement.insertAdjacentHTML('beforeend', newHtml);
             found = true;
           }
-          
         }
         
         );
@@ -305,6 +304,7 @@ function searchProducts(query) {
         newHtml = newHtml.replace('%product%', product.id);
         newHtml = newHtml.replace('%newPrice%', product.price - (product.price * product.discountPercentage / 100));
           newHtml = newHtml.replace('%description%', product.description);
+                    newHtml = newHtml.replace('%reviews%', product.reviews);
              searchResults.insertAdjacentHTML('beforeend', newHtml);
           });
         });
