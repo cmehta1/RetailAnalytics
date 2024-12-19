@@ -21,6 +21,8 @@
 
 <canvas id="categoryDistribution" width="400" height="400"></canvas>
 <canvas id="stockByCategory" width="600" height="400"></canvas>
+<canvas id="averagePriceByCategory" width="600" height="400"></canvas>
+<canvas id="ratingDistribution" width="600" height="400"></canvas>
 
 <script>
         // Fetch data from data.json
@@ -30,19 +32,30 @@
                 // Prepare data for charts
                 const categoryCounts = {};
                 const categoryStocks = {};
+                const categoryPrices = {};
+                const categoryRatings = {};
+                const totalRatings = {};
 
                 data.products.forEach(product => {
                     if (!categoryCounts[product.category]) {
                         categoryCounts[product.category] = 0;
                         categoryStocks[product.category] = 0;
+                        categoryPrices[product.category] = 0;
+                        categoryRatings[product.category] = 0;
+                        totalRatings[product.category] = 0;
                     }
                     categoryCounts[product.category] += 1;
                     categoryStocks[product.category] += product.stock;
+                    categoryPrices[product.category] += product.price;
+                    categoryRatings[product.category] += product.rating;
+                    totalRatings[product.category] += 1;
                 });
 
                 const categories = Object.keys(categoryCounts);
                 const counts = Object.values(categoryCounts);
                 const stocks = Object.values(categoryStocks);
+                const averagePrices = categories.map(category => (categoryPrices[category] / categoryCounts[category]).toFixed(2));
+                const averageRatings = categories.map(category => (categoryRatings[category] / totalRatings[category]).toFixed(2));
 
                 // Pie Chart: Category Distribution
                 const ctx1 = document.getElementById('categoryDistribution').getContext('2d');
@@ -78,6 +91,51 @@
                         }
                     }
                 });
+
+                // Line Chart: Average Price by Category
+                const ctx3 = document.getElementById('averagePriceByCategory').getContext('2d');
+                new Chart(ctx3, {
+                    type: 'line',
+                    data: {
+                        labels: categories,
+                        datasets: [{
+                            label: 'Average Price by Category',
+                            data: averagePrices,
+                            borderColor: '#FF6384',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                // Bar Chart: Average Rating by Category
+                const ctx4 = document.getElementById('ratingDistribution').getContext('2d');
+                new Chart(ctx4, {
+                    type: 'bar',
+                    data: {
+                        labels: categories,
+                        datasets: [{
+                            label: 'Average Rating by Category',
+                            data: averageRatings,
+                            backgroundColor: '#4BC0C0'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 5
+                            }
+                        }
+                    }
+                });
+
             })
             .catch(error => console.error('Error loading data:', error));
     </script>
