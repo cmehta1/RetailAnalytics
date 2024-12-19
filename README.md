@@ -20,7 +20,7 @@ It is clone of Astore Ecommerce website with all basic functionalities of Ecomme
 - Search: A search bar allows users to search for specific products.
 
 ## Demo
-[https://sajidbhatti786.github.io/Ecommerce-website/html/index.html](https://cmehta1.github.io/RetailAnalytics/)
+https://cmehta1.github.io/RetailAnalytics/
 
 
 
